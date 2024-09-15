@@ -43,7 +43,7 @@ flags.DEFINE_string(
 )
 
 
-def run_foreach(_):
+def main(_):
     if FLAGS.file_search_query:
         if not FLAGS.input_files:
             print("Source directory not provided.")
@@ -75,9 +75,9 @@ def run_foreach(_):
 
         exit(exit_code)
     else:
-        print("Type \"lumei --help\" for additional info.")
+        print("Type \"lm --help\" for additional info.")
         exit(1)
 
 
 if __name__ == "__main__":
-    app.run(run_foreach)
+    app.run(main)

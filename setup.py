@@ -17,7 +17,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='lumei',
-    version="0.2.1",
+    version="0.2.2",
     description='File search tool using OpenAI assistant.',
     long_description=long_description,
     long_description_content_type="text/markdown",
