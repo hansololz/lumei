@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 
 def print_message():
-    print('Type `meimei` in the CLI to start searching file content.')
+    print('Type `lm` in the CLI to start searching file content.')
 
 
 atexit.register(print_message)
@@ -16,20 +16,20 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name='meimei',
-    version="0.2.0",
+    name='lumei',
+    version="0.2.1",
     description='File search tool using OpenAI assistant.',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url='https://github.com/hansololz/meimei',
-    keywords=["meimei", 'openai', 'file search'],
+    url='https://github.com/hansololz/lumei',
+    keywords=["lumei", 'openai', 'file search'],
     packages=find_packages(),
     include_package_data=True,
     python_requires='>=3.12',
     install_requires=requirements,
     entry_points={
         'console_scripts': [
-            'mm = meimei.meimei:main',
+            'lm = lumei.lumei:main',
         ]
     },
     license='GPL',

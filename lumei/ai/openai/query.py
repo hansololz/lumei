@@ -1,9 +1,9 @@
 import ast
 from typing import Optional
 
-from meimei.ai.openai.agent import create_agent
-from meimei.ai.openai.file_search import file_search
-from meimei.utils.file_manager import save_result, DataDescription, find_matched_files, setup_output_file, \
+from lumei.ai.openai.agent import create_agent
+from lumei.ai.openai.file_search import file_search
+from lumei.utils.file_manager import save_result, DataDescription, find_matched_files, setup_output_file, \
     check_if_can_create_file, create_data_description
 
 
