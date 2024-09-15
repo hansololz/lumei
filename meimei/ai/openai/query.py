@@ -1,9 +1,9 @@
 import ast
 from typing import Optional
 
-from amber.ai.openai.agent import create_agent
-from amber.ai.openai.file_search import file_search
-from amber.utils.file_manager import save_result, DataDescription, find_matched_files, setup_output_file, \
+from meimei.ai.openai.agent import create_agent
+from meimei.ai.openai.file_search import file_search
+from meimei.utils.file_manager import save_result, DataDescription, find_matched_files, setup_output_file, \
     check_if_can_create_file, create_data_description
 
 

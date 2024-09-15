@@ -6,7 +6,7 @@ from openai.types import FileObject
 from openai.types.beta import Thread
 from openai.types.beta.threads import Run
 
-from amber.ai.openai.agent import Agent
+from meimei.ai.openai.agent import Agent
 
 
 def file_search(agent: Agent, file_path: str, query: [str, str]) -> [Optional[dict[str, str]], Optional[str]]:

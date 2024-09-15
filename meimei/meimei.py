@@ -75,7 +75,7 @@ def run_foreach(_):
 
         exit(exit_code)
     else:
-        print("Type \"amber --help\" for additional info.")
+        print("Type \"meimei --help\" for additional info.")
         exit(1)
 
 
