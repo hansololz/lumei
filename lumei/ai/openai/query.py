@@ -8,7 +8,7 @@ from lumei.utils.file_manager import save_result, DataDescription, find_matched_
 
 
 def run_file_search_and_store_results(
-        open_ai_api_key: str,
+        openai_api_key: str,
         input_files: str,
         output_file: str,
         file_search_query: str
@@ -41,7 +41,7 @@ def run_file_search_and_store_results(
 
     print(f"Created list of files to process. Found {len(files)} files.")
 
-    agent, err = create_agent(open_ai_api_key)
+    agent, err = create_agent(openai_api_key)
 
     if err:
         print(err)

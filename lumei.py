@@ -1,29 +1,29 @@
+import argparse
 import os
 
-from absl import app, flags
+from lumei.ai.openai.query import run_file_search_and_store_results
+from lumei.utils.file_manager import file_search_query_example
 
-from ai.openai.query import run_file_search_and_store_results
-from utils.file_manager import file_search_query_example
+parser = argparse.ArgumentParser(description='Lumei file search processor')
 
-FLAGS = flags.FLAGS
-flags.DEFINE_string(
-    name="input_files",
+parser.add_argument(
+    "--input-files",
     default=None,
     required=False,
     help="Source files to process on. "
          "Multiple files can be provided and they are seperated by a comma \",\" character. "
          "File inputs can be expressed as a path to a single file or a regex."
 )
-flags.DEFINE_string(
-    name="output_file",
+parser.add_argument(
+    "--output-file",
     default=None,
     required=False,
     help="Path of the file that the results will be written to. "
          "Input must be a file path to a single file. "
          "Supported file formate are \".csv\", \".xlsx\", and \".json\"."
 )
-flags.DEFINE_string(
-    name="file_search_query",
+parser.add_argument(
+    "--file-search-query",
     default=None,
     required=False,
     help="Name and description of data to search for. "
@@ -34,50 +34,51 @@ flags.DEFINE_string(
          "Example:"
          f"{file_search_query_example}"
 )
-flags.DEFINE_string(
-    name="open_ai_api_key",
+parser.add_argument(
+    "--openai-api-key",
     default=None,
     required=False,
     help="API key for OpenAI, necessary for file search functionalities. "
-         "Alternative way to provide the API key is to set as \"OPEN_AI_API_KEY\" environment variable."
+         "Alternative way to provide the API key is to set as \"OPENAI_API_KEY\" environment variable."
 )
+args = parser.parse_args()
 
 
-def main(_):
-    if FLAGS.file_search_query:
-        if not FLAGS.input_files:
+def main():
+    if args.file_search_query:
+        if not args.input_files:
             print("Source directory not provided.")
             exit(1)
 
-        if not FLAGS.output_file:
+        if not args.output_file:
             print("Destination directory not provided.")
             exit(1)
 
-        open_ai_api_key = None
+        openai_api_key = None
 
-        if FLAGS.open_ai_api_key:
-            open_ai_api_key = FLAGS.open_ai_api_key
+        if args.openai_api_key:
+            openai_api_key = args.openai_api_key
         elif os.getenv("OPEN_AI_API_KEY"):
-            open_ai_api_key = os.getenv("OPEN_AI_API_KEY")
+            openai_api_key = os.getenv("OPENAI_API_KEY")
 
-        if not open_ai_api_key:
+        if not openai_api_key:
             print("OpenAI API key not provided.")
             exit(1)
 
         print("Starting file search process.")
 
         exit_code = run_file_search_and_store_results(
-            open_ai_api_key=open_ai_api_key,
-            input_files=FLAGS.input_files,
-            output_file=FLAGS.output_file,
-            file_search_query=FLAGS.file_search_query,
+            openai_api_key=openai_api_key,
+            input_files=args.input_files,
+            output_file=args.output_file,
+            file_search_query=args.file_search_query,
         )
 
         exit(exit_code)
     else:
-        print("Type \"lm --help\" for additional info.")
+        print("Type \"lumei --help\" for additional info.")
         exit(1)
 
 
-if __name__ == "__main__":
-    app.run(main)
+if __name__ == '__main__':
+    main()

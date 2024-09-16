@@ -22,14 +22,14 @@ default_model = "gpt-4o"
 
 
 def create_agent(
-        open_ai_api_key: str,
+        openai_api_key: str,
         instructions: Optional[str] = default_instructions,
         model: Optional[str] = default_model,
         assistant_id: Optional[str] = None,
 ) -> [Optional[Agent], Optional[str]]:
     try:
         open_ai_client = OpenAI(
-            api_key=open_ai_api_key
+            api_key=openai_api_key
         )
     except Exception as e:
         return None, f"Failed to create OpenAI client: {e}"

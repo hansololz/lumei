@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 
 def print_message():
-    print('Type `lm` in the CLI to start searching file content.')
+    print('Type `lumei` in the CLI to start searching file content.')
 
 
 atexit.register(print_message)
@@ -17,7 +17,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='lumei',
-    version="0.2.2",
+    version="0.2.3",
     description='File search tool using OpenAI assistant.',
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -29,7 +29,7 @@ setup(
     install_requires=requirements,
     entry_points={
         'console_scripts': [
-            'lm = lumei.lumei:main',
+            'lumei = lumei:main',
         ]
     },
     license='GPL',
