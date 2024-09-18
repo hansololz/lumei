@@ -23,6 +23,13 @@ parser.add_argument(
          "Supported file formate are \".csv\", \".xlsx\", and \".json\"."
 )
 parser.add_argument(
+    "--openai-api-key",
+    default=None,
+    required=False,
+    help="API key for OpenAI, necessary for file search functionalities. "
+         "Alternative way to provide the API key is to set as \"OPENAI_API_KEY\" environment variable."
+)
+parser.add_argument(
     "--file-search-query",
     default=None,
     required=False,
@@ -33,13 +40,6 @@ parser.add_argument(
          "\n\n"
          "Example:"
          f"{file_search_query_example}"
-)
-parser.add_argument(
-    "--openai-api-key",
-    default=None,
-    required=False,
-    help="API key for OpenAI, necessary for file search functionalities. "
-         "Alternative way to provide the API key is to set as \"OPENAI_API_KEY\" environment variable."
 )
 args = parser.parse_args()
 
