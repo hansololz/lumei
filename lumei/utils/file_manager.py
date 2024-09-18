@@ -52,7 +52,13 @@ def save_result(output_file: str, dataset: [DataDescription], results: [dict[str
     rows: [dict[str, str]] = []
 
     for result in results:
-        row = [result[data.name] for data in dataset]
+        row = []
+
+        for data in dataset:
+            if result[data.name]:
+                row.append(result[data.name])
+            else:
+                row.append(None)
         rows.append(row)
 
     try:
