@@ -7,8 +7,11 @@ from openai.types.beta import Thread
 from openai.types.beta.threads import Run
 
 from lumei.openai.agent import Agent
-from lumei.query import FileSearchQueryParam
 
+class FileSearchQueryParam:
+    def __init__(self, name: str, description: str):
+        self.name = name
+        self.description = description
 
 def file_search(
         agent: Agent,
