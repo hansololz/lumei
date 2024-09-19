@@ -49,6 +49,8 @@ def main():
         openai_api_key = args.openai_api_key
     elif os.getenv("OPENAI_API_KEY"):
         openai_api_key = os.getenv("OPENAI_API_KEY")
+    else:
+        openai_api_key = None
 
     if not openai_api_key:
         print("OpenAI API key not provided.")
