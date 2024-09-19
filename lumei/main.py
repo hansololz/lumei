@@ -4,7 +4,7 @@ import os
 from lumei.ai.openai.query import run_file_search_and_store_results
 from lumei.utils.file_manager import file_search_query_example
 
-parser = argparse.ArgumentParser(description='Lumei file search processor')
+parser = argparse.ArgumentParser(description='Lumei file processor')
 
 parser.add_argument(
     "--input-files",
