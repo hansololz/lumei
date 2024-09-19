@@ -4,3 +4,4 @@ dist
 *.egg-info
 venv/*
 .venv/*
+./lumei/__pycache__/*
