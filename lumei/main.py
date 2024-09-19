@@ -62,7 +62,7 @@ def main():
         input_files=args.input_files,
         output_file=args.output_file,
         openai_api_key=openai_api_key,
-        file_search_query=args.query,
+        file_search_query_string=args.query,
     )
 
     exit(exit_code)

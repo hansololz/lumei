@@ -7,13 +7,22 @@ from openai.types.beta import Thread
 from openai.types.beta.threads import Run
 
 from lumei.ai.openai.agent import Agent
+from lumei.ai.openai.query import FileSearchQueryParam
 
 
-def file_search(agent: Agent, file_path: str, query: [str, str]) -> [Optional[dict[str, str]], Optional[str]]:
+def file_search(
+        agent: Agent,
+        file_path: str,
+        file_search_query_params: list[FileSearchQueryParam]
+) -> [Optional[dict[str, str]], Optional[str]]:
     file: Optional[FileObject] = None
     vector_store_id: Optional[str] = None
     thread: Optional[Thread] = None
     run: Optional[Run] = None
+    query = {}
+
+    for param in file_search_query_params:
+        query[param.name] = param.description
 
     try:
         file = agent.client.files.create(
