@@ -1,8 +1,8 @@
 import argparse
 import os
 
-from lumei.ai.openai.query import run_file_search_and_store_results
-from lumei.utils.file_manager import file_search_query_example
+# from lumei.openai.query import run_file_search_and_store_results
+# from lumei.file_manager import file_search_query_example
 
 parser = argparse.ArgumentParser(description='Lumei file processor')
 
@@ -37,35 +37,33 @@ parser.add_argument(
          "Input should be an array of JSON objects."
          "Name of the data to search for is the key. Name of the data will be the column name for the result dataset. "
          "The description of the data to search is the value."
-         "\n\n"
-         "Example:"
-         f"{file_search_query_example}"
 )
 args = parser.parse_args()
 
 
 def main():
-    if args.openai_api_key:
-        openai_api_key = args.openai_api_key
-    elif os.getenv("OPENAI_API_KEY"):
-        openai_api_key = os.getenv("OPENAI_API_KEY")
-    else:
-        openai_api_key = None
-
-    if not openai_api_key:
-        print("OpenAI API key not provided.")
-        exit(1)
-
-    print("Starting file search process.")
-
-    exit_code = run_file_search_and_store_results(
-        input_files=args.input_files,
-        output_file=args.output_file,
-        openai_api_key=openai_api_key,
-        file_search_query_string=args.query,
-    )
-
-    exit(exit_code)
+    print("HRERE 1")
+    # if args.openai_api_key:
+    #     openai_api_key = args.openai_api_key
+    # elif os.getenv("OPENAI_API_KEY"):
+    #     openai_api_key = os.getenv("OPENAI_API_KEY")
+    # else:
+    #     openai_api_key = None
+    #
+    # if not openai_api_key:
+    #     print("OpenAI API key not provided.")
+    #     exit(1)
+    #
+    # print("Starting file search process.")
+    #
+    # exit_code = run_file_search_and_store_results(
+    #     input_files=args.input_files,
+    #     output_file=args.output_file,
+    #     openai_api_key=openai_api_key,
+    #     file_search_query_string=args.query,
+    # )
+    #
+    # exit(exit_code)
 
 
 if __name__ == '__main__':
