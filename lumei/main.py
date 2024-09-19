@@ -30,7 +30,7 @@ parser.add_argument(
          "Alternative way to provide the API key is to set as \"OPENAI_API_KEY\" environment variable."
 )
 parser.add_argument(
-    "--file-search-query",
+    "--query",
     default=None,
     required=True,
     help="Name and description of data to search for. "
@@ -59,10 +59,10 @@ def main():
     print("Starting file search process.")
 
     exit_code = run_file_search_and_store_results(
-        openai_api_key=openai_api_key,
         input_files=args.input_files,
         output_file=args.output_file,
-        file_search_query=args.file_search_query,
+        openai_api_key=openai_api_key,
+        file_search_query=args.query,
     )
 
     exit(exit_code)

@@ -19,7 +19,7 @@ lumei \
   --input-files ~/folder_1/*.pdf,~/folder_2/*.pdf \
   --output-file ~/Desktop/output.json \
   --openai-api-key=<OPENAI_API_KEY> \
-  --file-search-query="[
+  --query="[
   	{'name': 'vendor', 'description': 'Name of the vendor who issued the invoice.'}, 
   	{'name': 'price', 'description': 'Total bill from the invoice.'}
   ]"
@@ -39,14 +39,14 @@ Path of the file that the results will be written to.
 Input must be a file path to a single file.
 Supported file formate are ".csv", ".xlsx", and ".json".
 
-#### --openai-api-key
+#### --openai-api-key [Optional]
 
 API key for OpenAI, necessary for file search functionalities. 
 Key can be obtained from here https://platform.openai.com/account/api-keys.
 
 Alternative way to provide the API key is to set it as the "OPENAI_API_KEY" environment variable.
 
-#### --file-search-query
+#### --query
 
 Name and description of data to search for.
 Input should be an array of JSON objects.
