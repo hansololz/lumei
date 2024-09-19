@@ -1,1 +1,1 @@
-python3 setup.py install develop
+pip3 install -e .

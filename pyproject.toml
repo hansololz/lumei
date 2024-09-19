@@ -21,4 +21,4 @@ dependencies = [
 ]
 
 [project.scripts]
-lumei = "lumei.__main__:main"
+lumei = "lumei.cli:main"
