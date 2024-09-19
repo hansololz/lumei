@@ -5,7 +5,7 @@ from lumei.ai.openai.agent import create_agent
 from lumei.ai.openai.file_search import file_search
 from lumei.utils.file_manager import save_result, DataDescription, find_matched_files, setup_output_file, \
     check_if_can_create_file, create_data_description
-from lumei.utils.query import parse_query_string
+from lumei.utils.query_param import parse_query_string
 
 
 class FileSearchQueryParam:
