@@ -1,5 +1,8 @@
 import argparse
+import os
 
+# from lumei.query import run_file_search_and_store_results
+from lumei.query_executor import execute_query_and_store_results
 
 parser = argparse.ArgumentParser(description='Lumei file processor')
 
@@ -41,24 +44,24 @@ args = parser.parse_args()
 
 def main():
     print("HRERE 1")
-    # if args.openai_api_key:
-    #     openai_api_key = args.openai_api_key
-    # elif os.getenv("OPENAI_API_KEY"):
-    #     openai_api_key = os.getenv("OPENAI_API_KEY")
-    # else:
-    #     openai_api_key = None
-    #
-    # if not openai_api_key:
-    #     print("OpenAI API key not provided.")
-    #     exit(1)
-    #
-    # print("Starting file search process.")
-    #
-    # exit_code = run_file_search_and_store_results(
-    #     input_files=args.input_files,
-    #     output_file=args.output_file,
-    #     openai_api_key=openai_api_key,
-    #     file_search_query_string=args.query,
-    # )
-    #
-    # exit(exit_code)
+    if args.openai_api_key:
+        openai_api_key = args.openai_api_key
+    elif os.getenv("OPENAI_API_KEY"):
+        openai_api_key = os.getenv("OPENAI_API_KEY")
+    else:
+        openai_api_key = None
+
+    if not openai_api_key:
+        print("OpenAI API key not provided.")
+        exit(1)
+
+    print("Starting file search process.")
+
+    exit_code = execute_query_and_store_results(
+        input_files=args.input_files,
+        output_file=args.output_file,
+        openai_api_key=openai_api_key,
+        file_search_query_string=args.query,
+    )
+
+    exit(exit_code)
