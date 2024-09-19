@@ -29,12 +29,16 @@ def execute_query_and_store_results(
         print(err)
         return 1
 
-    query = {}
+    query = []
     for query_param in file_search_query:
-        query[query_param.name] = FileSearchQueryParam(
-            name=query_param.name,
-            description=query_param.search,
+        query.append(
+            FileSearchQueryParam(
+                name=query_param.name,
+                description=query_param.search,
+            )
         )
+
+    print(f"Param {str(query)}")
 
     print("Parsed list of names and data descriptions for file search.")
 

@@ -1,4 +1,4 @@
-import json
+import ast
 from typing import Optional
 
 
@@ -10,7 +10,7 @@ class QueryParam:
 
 def parse_query_string(query_string: str) -> [Optional[list[QueryParam]], Optional[str]]:
     try:
-        query_objects = json.loads(query_string)
+        query_objects = ast.literal_eval(query_string)
     except Exception as e:
         return None, f"Failed to parse query with string: {e}"
 
@@ -22,8 +22,8 @@ def parse_query_string(query_string: str) -> [Optional[list[QueryParam]], Option
     query = []
 
     for query_object in query_objects:
-        name = query_object["name"]
-        search = query_object["search"]
+        name = query_object.get("name")
+        search = query_object.get("search")
 
         if not name:
             return None, f"Query parameter name is required: {query_string}"
