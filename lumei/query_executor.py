@@ -39,8 +39,6 @@ def execute_query_and_store_results(
             )
         )
 
-    print(f"Param {str(query)}")
-
     print("Parsed list of names and data descriptions for file search.")
 
     files, err = find_matched_files(input_files)
@@ -76,7 +74,7 @@ def execute_query_and_store_results(
 
     print(f"Finished processing files.")
 
-    err = setup_output_file(output_file, query_param_names)
+    err = setup_output_file(output_file)
 
     if err:
         print(err)

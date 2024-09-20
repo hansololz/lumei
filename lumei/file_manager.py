@@ -52,8 +52,6 @@ def check_if_can_create_file(output_file) -> Optional[str]:
 
 
 def save_result(output_file: str, query_param_names: list[str], result_rows: [dict[str, str]]) -> Optional[str]:
-    print(f"SCARS {json.dumps(result_rows)}")
-
     output_rows: [dict[str, Optional[str]]] = []
 
     for result_row in result_rows:
@@ -82,13 +80,11 @@ def save_result(output_file: str, query_param_names: list[str], result_rows: [di
         return f"Failed to write result to output file {e}"
 
 
-def setup_output_file(output_file: str, query_param_names: list[str]) -> Optional[str]:
-    print(query_param_names)
-
+def setup_output_file(output_file: str) -> Optional[str]:
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
     with open(output_file, "w", newline="") as file:
-        writer = csv.writer(file)
+        csv.writer(file)
 
     return None
 
