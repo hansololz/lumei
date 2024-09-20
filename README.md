@@ -17,7 +17,7 @@ The command requires an OpenAI API key which can be obtained from here https://p
 ```
 lumei \
   --input-files ~/folder_1/*.pdf,~/folder_2/*.pdf \
-  --output-file ~/Desktop/output.json \
+  --output-file ~/output.json \
   --openai-api-key=<OPENAI_API_KEY> \
   --query="[
   	{'name': 'vendor', 'search': 'Name of the vendor who issued the invoice.'}, 
@@ -38,6 +38,7 @@ File inputs can be expressed as a path to a single file or a regex.
 Path of the file that the results will be written to.
 Input must be a file path to a single file.
 Supported file formate are ".csv", ".xlsx", and ".json".
+Output file will only be written to when all results have been obtained.
 
 #### --openai-api-key [Optional]
 
