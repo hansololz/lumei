@@ -29,7 +29,9 @@ def execute_query_and_store_results(
         return 1
 
     query = []
+    query_param_names: list[str] = []
     for query_param in file_search_query:
+        query_param_names.append(query_param.name)
         query.append(
             FileSearchQueryParam(
                 name=query_param.name,
@@ -74,7 +76,7 @@ def execute_query_and_store_results(
 
     print(f"Finished processing files.")
 
-    err = setup_output_file(output_file, query)
+    err = setup_output_file(output_file, query_param_names)
 
     if err:
         print(err)
@@ -82,7 +84,7 @@ def execute_query_and_store_results(
 
     print(f"Created output file: {output_file}.")
 
-    err = save_result(output_file, query, results)
+    err = save_result(output_file, query_param_names, results)
 
     if err:
         print(err)

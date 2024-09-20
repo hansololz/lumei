@@ -8,10 +8,12 @@ from openai.types.beta.threads import Run
 
 from lumei.openai.agent import Agent
 
+
 class FileSearchQueryParam:
     def __init__(self, name: str, description: str):
         self.name = name
         self.description = description
+
 
 def file_search(
         agent: Agent,

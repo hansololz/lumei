@@ -1,4 +1,5 @@
 import csv
+import json
 import os
 import re
 from typing import Optional
@@ -7,9 +8,9 @@ import pandas as pd
 
 file_search_query_example = """
 [
-    { "name": "Student Name", "description": "Name of the student." },
-    { "name": "School", "description": "Student's school" },
-    { "name": "Major", "description": "Student's major." }
+    { "name": "Student Name", "search": "Name of the student." },
+    { "name": "School", "search": "Student's school" },
+    { "name": "Major", "search": "Student's major." }
 ]
 """
 
@@ -25,10 +26,12 @@ def create_data_description(query: dict[str, str]) -> [Optional[DataDescription]
     description = query['description']
 
     if not name:
-        return None, f"Missing name field for file search query. Example of correct query: {file_search_query_example}"
+        return None, (f"Missing `name` field for file search query. "
+                      f"Example of correct query: {file_search_query_example}")
 
     if not description:
-        return None, f"Missing description field for file search query. Example of correct query: {file_search_query_example}"
+        return None, (f"Missing `search` field for file search query. "
+                      f"Example of correct query: {file_search_query_example}")
 
     return DataDescription(name, description), None
 
@@ -48,27 +51,30 @@ def check_if_can_create_file(output_file) -> Optional[str]:
     return None
 
 
-def save_result(output_file: str, dataset: [DataDescription], results: [dict[str, str]]) -> Optional[str]:
-    rows: [dict[str, str]] = []
+def save_result(output_file: str, query_param_names: list[str], result_rows: [dict[str, str]]) -> Optional[str]:
+    print(f"SCARS {json.dumps(result_rows)}")
 
-    for result in results:
-        row = []
+    output_rows: [dict[str, Optional[str]]] = []
 
-        for data in dataset:
-            if result[data.name]:
-                row.append(result[data.name])
+    for result_row in result_rows:
+        output_row: dict[str, str] = {}
+        for name in query_param_names:
+            value = result_row.get(name)
+
+            if value:
+                output_row[name] = value
             else:
-                row.append(None)
-        rows.append(row)
+                output_row[name] = None
+        output_rows.append(output_row)
 
     try:
         with open(output_file, "w", newline=""):
-            df = pd.DataFrame(results)
+            df = pd.DataFrame(output_rows)
 
             if output_file.endswith(".csv"):
-                df.to_csv(output_file, index=False)
+                df.to_csv(output_file, index=False, columns=query_param_names)
             if output_file.endswith(".xlsx"):
-                df.to_excel(output_file, index=False)
+                df.to_excel(output_file, index=False, columns=query_param_names)
             if output_file.endswith(".json"):
                 df.to_json(output_file, orient='records', lines=False, indent=4)
         return None
@@ -76,13 +82,13 @@ def save_result(output_file: str, dataset: [DataDescription], results: [dict[str
         return f"Failed to write result to output file {e}"
 
 
-def setup_output_file(output_file: str, dataset: [DataDescription]) -> Optional[str]:
+def setup_output_file(output_file: str, query_param_names: list[str]) -> Optional[str]:
+    print(query_param_names)
+
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
     with open(output_file, "w", newline="") as file:
-        column_headers = [data.name for data in dataset]
         writer = csv.writer(file)
-        writer.writerow(column_headers)
 
     return None
 
