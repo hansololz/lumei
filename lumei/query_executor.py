@@ -1,12 +1,11 @@
 import ast
 from typing import Optional
 
-from lumei.openai.agent import create_agent
-from lumei.openai.file_search import file_search, FileSearchQueryParam
 from lumei.file_manager import save_result, DataDescription, find_matched_files, setup_output_file, \
     check_if_can_create_file, create_data_description
+from lumei.openai.agent import create_agent
+from lumei.openai.file_search import file_search, FileSearchQueryParam
 from lumei.query_param import parse_query_string
-
 
 
 def execute_query_and_store_results(
