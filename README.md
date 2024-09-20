@@ -20,8 +20,8 @@ lumei \
   --output-file ~/Desktop/output.json \
   --openai-api-key=<OPENAI_API_KEY> \
   --query="[
-  	{'name': 'vendor', 'description': 'Name of the vendor who issued the invoice.'}, 
-  	{'name': 'price', 'description': 'Total bill from the invoice.'}
+  	{'name': 'vendor', 'search': 'Name of the vendor who issued the invoice.'}, 
+  	{'name': 'price', 'search': 'Total bill from the invoice.'}
   ]"
 ```
 
@@ -48,21 +48,21 @@ Alternative way to provide the API key is to set it as the "OPENAI_API_KEY" envi
 
 #### --query
 
-Name and description of data to search for.
+Name and the description of data to search for.
 Input should be an array of JSON objects.
-Name of the data to search for is the key. Name of the data will be the column name for the result dataset.
-The description of the data to search is the value.
+`name` is the name of the data to search for. Name of the data will be the column name for the result dataset.
+`search` is the description of the data to search for.
 
 Example:
 ```
 [
     {
         'name': 'vendor', 
-        'description': 'Name of the vendor who issued the invoice.'
+        'search': 'Name of the vendor who issued the invoice.'
     }, 
     {
         'name': 'price', 
-        'description': 'Total bill from the invoice.'
+        'search': 'Total bill from the invoice.'
     }
 ]
 ```
