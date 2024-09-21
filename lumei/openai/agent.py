@@ -4,9 +4,12 @@ from openai import OpenAI
 
 
 class Agent:
-    def __init__(self, assistant_id: str, open_ai_client: OpenAI):
-        self.id = assistant_id
-        self.client = open_ai_client
+    def __init__(
+            self, assistant_id: str,
+            openai_client: OpenAI
+    ):
+        self.assistant_id = assistant_id
+        self.client = openai_client
 
 
 default_instructions = """"
@@ -28,7 +31,7 @@ def create_agent(
         assistant_id: Optional[str] = None,
 ) -> [Optional[Agent], Optional[str]]:
     try:
-        open_ai_client = OpenAI(
+        openai_client = OpenAI(
             api_key=openai_api_key
         )
     except Exception as e:
@@ -36,7 +39,7 @@ def create_agent(
 
     if not assistant_id:
         try:
-            assistant = open_ai_client.beta.assistants.create(
+            assistant = openai_client.beta.assistants.create(
                 name="File Search",
                 instructions=instructions,
                 model=model,
@@ -54,5 +57,5 @@ def create_agent(
 
     return Agent(
         assistant_id=new_assistant_id,
-        open_ai_client=open_ai_client,
+        openai_client=openai_client,
     ), None

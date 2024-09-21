@@ -55,7 +55,7 @@ def execute_query_and_store_results(
         print(err)
         return 1
 
-    print(f"Created agent with id: {agent.id}.")
+    print(f"Created agent with assistant id: {agent.assistant_id}.")
 
     print(f"Begun processing files.")
 

@@ -55,7 +55,7 @@ def save_result(output_file: str, query_param_names: list[str], result_rows: [di
     output_rows: [dict[str, Optional[str]]] = []
 
     for result_row in result_rows:
-        output_row: dict[str, str] = {}
+        output_row: dict[str, Optional[str]] = {}
         for name in query_param_names:
             value = result_row.get(name)
 

@@ -20,7 +20,6 @@ def file_search(
         file_path: str,
         file_search_query_params: list[FileSearchQueryParam]
 ) -> [Optional[dict[str, str]], Optional[str]]:
-    file: Optional[FileObject] = None
     vector_store_id: Optional[str] = None
     thread: Optional[Thread] = None
     run: Optional[Run] = None
@@ -65,7 +64,7 @@ def file_search(
     try:
         run = agent.client.beta.threads.runs.create_and_poll(
             thread_id=thread.id,
-            assistant_id=agent.id,
+            assistant_id=agent.assistant_id,
             temperature=0,
         )
     except Exception as e:
