@@ -8,12 +8,12 @@ def openai_file_search(
         input_file_path: str,
         file_search_query: dict[str, str]
 ) -> Optional[dict[str, str]]:
-    agent, err = create_agent(
+    agent, error = create_agent(
         openai_api_key=openai_api_key
     )
 
-    if err:
-        print(err)
+    if error:
+        print(error)
         return None
 
     params = []

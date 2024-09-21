@@ -14,18 +14,18 @@ def execute_query_and_store_results(
         output_file: str,
         file_search_query_string: str
 ) -> int:
-    err = check_if_can_create_file(output_file)
+    error = check_if_can_create_file(output_file)
 
-    if err:
-        print(err)
+    if error:
+        print(error)
         return 1
 
     print("Verified permission to create file.")
 
-    file_search_query, err = parse_query_string(file_search_query_string)
+    file_search_query, error = parse_query_string(file_search_query_string)
 
-    if err:
-        print(err)
+    if error:
+        print(error)
         return 1
 
     query = []
@@ -41,18 +41,18 @@ def execute_query_and_store_results(
 
     print("Parsed list of names and data descriptions for file search.")
 
-    files, err = find_matched_files(input_files)
+    files, error = find_matched_files(input_files)
 
-    if err:
-        print(err)
+    if error:
+        print(error)
         return 1
 
     print(f"Created list of files to process. Found {len(files)} files.")
 
-    agent, err = create_agent(openai_api_key)
+    agent, error = create_agent(openai_api_key)
 
-    if err:
-        print(err)
+    if error:
+        print(error)
         return 1
 
     print(f"Created agent with assistant id: {agent.assistant_id}.")
@@ -74,18 +74,18 @@ def execute_query_and_store_results(
 
     print(f"Finished processing files.")
 
-    err = setup_output_file(output_file)
+    error = setup_output_file(output_file)
 
-    if err:
-        print(err)
+    if error:
+        print(error)
         return 1
 
     print(f"Created output file: {output_file}.")
 
-    err = save_result(output_file, query_param_names, results)
+    error = save_result(output_file, query_param_names, results)
 
-    if err:
-        print(err)
+    if error:
+        print(error)
         return 1
 
     print(f"Wrote result to file: {output_file}.")
@@ -99,8 +99,8 @@ def convert_file_search_query_to_objects(file_search_query: str) -> [Optional[li
         descriptions: [list[DataDescription]] = []
 
         for query in queries:
-            description, err = create_data_description(query)
-            if err:
+            description, error = create_data_description(query)
+            if error:
                 return None, f"Failed to parse file search query: {query}"
             descriptions += [description]
 

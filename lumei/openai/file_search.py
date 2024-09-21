@@ -106,7 +106,7 @@ def clean_up_request(agent: Agent, file: Optional[FileObject], vector_store_id: 
                 file_id=file.id
             )
         except Exception as e:
-            print(f"Failed to delete file: {file.id}. {e}")
+            print(f"Failed to delete file: {file.id}. Error: {e}")
 
     if vector_store_id:
         try:
@@ -114,4 +114,4 @@ def clean_up_request(agent: Agent, file: Optional[FileObject], vector_store_id: 
                 vector_store_id=vector_store_id
             )
         except Exception as e:
-            print(f"Failed to delete vector store: {vector_store_id}. {e}")
+            print(f"Failed to delete vector store: {vector_store_id}. Error: {e}")
