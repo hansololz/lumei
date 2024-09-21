@@ -17,7 +17,7 @@ class FileSearchQueryParam:
 
 def file_search(
         agent: Agent,
-        file_path: str,
+        input_file_path: str,
         file_search_query_params: list[FileSearchQueryParam]
 ) -> [Optional[dict[str, str]], Optional[str]]:
     vector_store_id: Optional[str] = None
@@ -30,11 +30,11 @@ def file_search(
 
     try:
         file = agent.client.files.create(
-            file=open(file_path, "rb"),
+            file=open(input_file_path, "rb"),
             purpose="assistants",
         )
     except Exception as e:
-        return None, f"Failed to upload file: {file_path}. {e}"
+        return None, f"Failed to upload file: {input_file_path}. {e}"
 
     try:
         thread = agent.client.beta.threads.create(
