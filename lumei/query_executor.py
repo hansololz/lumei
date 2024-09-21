@@ -22,22 +22,23 @@ def execute_query_and_store_results(
 
     print("Verified permission to create file.")
 
-    file_search_query, error = parse_query_string(file_search_query_string)
+    query, error = parse_query_string(file_search_query_string)
 
     if error:
         print(error)
         return 1
 
-    query = []
+    file_search_query = []
     query_param_names: list[str] = []
-    for query_param in file_search_query:
-        query_param_names.append(query_param.name)
-        query.append(
-            FileSearchQueryParam(
-                name=query_param.name,
-                description=query_param.search,
+    for query_param in query:
+        if query_param.name and query_param.search:
+            query_param_names.append(query_param.name)
+            file_search_query.append(
+                FileSearchQueryParam(
+                    name=query_param.name,
+                    description=query_param.search,
+                )
             )
-        )
 
     print("Parsed list of names and data descriptions for file search.")
 
@@ -62,7 +63,7 @@ def execute_query_and_store_results(
     results: [dict[str, str]] = []
 
     for file in files:
-        result, error = file_search(agent, file, query)
+        result, error = file_search(agent, file, file_search_query)
 
         if result:
             print(f"    {file} SUCCESS")
