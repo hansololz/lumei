@@ -5,7 +5,9 @@ Work in progress, still trying polish a few features and getting some initial fe
 
 ## Installation (pip)
 
-    pip install lumei
+```bash
+pip install lumei
+```
 
 ## Usage
 
@@ -14,7 +16,7 @@ Work in progress, still trying polish a few features and getting some initial fe
 The following is an example of processing a list of pdf files and extracting the vendor and price data from the files.
 The command requires an OpenAI API key which can be obtained from here https://platform.openai.com/account/api-keys.
 
-```
+```bash
 lumei \
   --input-files ~/folder_1/*.pdf,~/folder_2/*.pdf \
   --output-file ~/output.json \
@@ -76,8 +78,9 @@ Example of using the file search method directly without CLI.
 
 ```python
 from lumei import openai_file_search
+from typing import Optional
 
-results: dict[str, str] = openai_file_search(
+results: Optional[dict[str, str]] = openai_file_search(
   openai_api_key="<OPENAI_API_KEY>",
   input_file_path="~/example_invoice_file.pdf",
   file_search_query={
