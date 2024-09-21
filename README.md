@@ -67,3 +67,22 @@ Example:
     }
 ]
 ```
+
+### Standalone Methods
+
+#### openai_file_search
+
+Example of using the file search method directly without CLI.
+
+```python
+from lumei import openai_file_search
+
+results: dict[str, str] = openai_file_search(
+  openai_api_key="<OPENAI_API_KEY>",
+  input_file_path="~/file.pdf",
+  file_search_query={
+    "vendor": "Name of the vendor who issued the invoice.",
+    "price": "Total bill from the invoice.",
+  }
+)
+```

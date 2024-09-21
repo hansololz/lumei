@@ -16,11 +16,9 @@ def openai_file_search(
         print(err)
         return None
 
-    print(f"Created agent with assistant id: {agent.assistant_id}.")
-
     params = []
 
-    for key, value in file_search_query:
+    for key, value in file_search_query.items():
         params.append(
             FileSearchQueryParam(
                 name=key,
