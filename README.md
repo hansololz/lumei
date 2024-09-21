@@ -79,7 +79,7 @@ from lumei import openai_file_search
 
 results: dict[str, str] = openai_file_search(
   openai_api_key="<OPENAI_API_KEY>",
-  input_file_path="~/file.pdf",
+  input_file_path="~/example_invoice_file.pdf",
   file_search_query={
     "vendor": "Name of the vendor who issued the invoice.",
     "price": "Total bill from the invoice.",

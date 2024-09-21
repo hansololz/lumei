@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "lumei"
-version = "0.3.3"
+version = "0.3.4"
 description = "File search tool using OpenAI assistant."
 readme = "README.md"
 license = { file = "LICENSE" }
