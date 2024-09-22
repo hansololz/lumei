@@ -7,6 +7,7 @@ from lumei.openai.file_search import (
     file_search,
 )
 from lumei.openai.standalone_file_search import (
+    FileSearchException,
     openai_file_search,
 )
 
@@ -15,5 +16,6 @@ __all__ = [
     "create_agent",
     "FileSearchQueryParam",
     "file_search",
+    "FileSearchException",
     "openai_file_search",
 ]

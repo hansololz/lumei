@@ -1,11 +1,13 @@
 import ast
+from datetime import datetime
 from typing import Optional
 
+from lumei.attribute_processor import get_attribute_results
 from lumei.file_manager import save_result, DataDescription, find_matched_files, setup_output_file, \
     check_if_can_create_file, create_data_description
 from lumei.openai.agent import create_agent
 from lumei.openai.file_search import file_search, FileSearchQueryParam
-from lumei.query_param import parse_query_string
+from lumei.query_param import parse_query_string, QueryParamAttribute
 
 
 def execute_query_and_store_results(
@@ -29,16 +31,19 @@ def execute_query_and_store_results(
         return 1
 
     file_search_query = []
+    attribute_query: dict[str, QueryParamAttribute] = {}
     query_param_names: list[str] = []
     for query_param in query:
+        query_param_names.append(query_param.name)
         if query_param.name and query_param.search:
-            query_param_names.append(query_param.name)
             file_search_query.append(
                 FileSearchQueryParam(
                     name=query_param.name,
                     description=query_param.search,
                 )
             )
+        if query_param.name and query_param.attribute:
+            attribute_query[query_param.name] = query_param.attribute
 
     print("Parsed list of names and data descriptions for file search.")
 
@@ -63,11 +68,20 @@ def execute_query_and_store_results(
     results: [dict[str, str]] = []
 
     for file in files:
-        result, error = file_search(agent, file, file_search_query)
+        start_time = datetime.now()
+        file_search_result, error = file_search(agent, file, file_search_query)
+        end_time = datetime.now()
 
-        if result:
-            print(f"    {file} SUCCESS")
+        if file_search_result:
+            result = get_attribute_results(
+                attribute_query=attribute_query,
+                input_file_path=file,
+                start_time=start_time,
+                end_time=end_time,
+            )
+            result.update(file_search_result)
             results.append(result)
+            print(f"    {file} SUCCESS")
         elif error:
             print(f"    {file} FAILED: {error}")
         else:

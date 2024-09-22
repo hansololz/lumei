@@ -3,6 +3,10 @@ from typing import Optional
 from lumei import create_agent, FileSearchQueryParam, file_search
 
 
+class FileSearchException(Exception):
+    pass
+
+
 def openai_file_search(
         openai_api_key: str,
         input_file_path: str,
@@ -33,7 +37,6 @@ def openai_file_search(
     )
 
     if error:
-        print(f"File search query failed with error: {error}")
-        return None
+        raise FileSearchException(f"File search query failed with error: {error}")
 
     return result
