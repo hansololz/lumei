@@ -8,7 +8,7 @@ def get_attribute_results(
         input_file_path: str,
         start_time: datetime,
         end_time: datetime,
-) -> dict[str, any]:
+) -> dict[str, str|int]:
     result: dict[str, any] = {}
 
     for key, attribute in attribute_query.items():
