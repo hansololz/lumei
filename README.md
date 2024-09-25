@@ -24,7 +24,8 @@ lumei \
   --query="[
   	{'name': 'vendor', 'search': 'Name of the vendor who issued the invoice.'}, 
   	{'name': 'price', 'search': 'Total bill from the invoice.'},
-  	{'name': 'file path', 'attribute': 'FILE_PATH'}
+  	{'name': 'file path', 'attribute': 'FILE_PATH'},
+  	{'name': 'file created time', 'command': 'stat -f %SB %input_file_path%'}
   ]"
 ```
 
@@ -57,6 +58,8 @@ Input should be an array of JSON objects.
 `name` is the name of the data to search for. Name of the data will be the column name for the result dataset.
 `search` is the description of the data to search for. 
 `attribute` is a piece metadata related to the query, list of possible attributes can be found below.
+`command` is the output of a bash command. 
+The command can reference the file path using the `%input_file_path%` variable.
 
 Example:
 ```
@@ -72,6 +75,10 @@ Example:
     {
         'name': 'file path', 
         'attribute': 'FILE_PATH'
+    },
+    {
+        'name': 'file created time', 
+        'command': 'stat -f %SB %input_file_path%'
     }
 ]
 ```
