@@ -83,6 +83,13 @@ def execute_query_and_store_results(
         if file_search_results:
             result.update(file_search_results)
 
+            command_results = process_commands(
+                input_file_path=file,
+                commands=command_query
+            )
+
+            result.update(command_results)
+
             attribute_results = get_attribute_results(
                 attribute_query=attribute_query,
                 input_file_path=file,
@@ -90,16 +97,7 @@ def execute_query_and_store_results(
                 end_time=end_time,
             )
 
-            print(attribute_results)
-
             result.update(attribute_results)
-
-            command_results = process_commands(
-                input_file_path=file,
-                commands=command_query
-            )
-
-            result.update(command_results)
 
             results.append(result)
             print(f"    {file} SUCCESS")
