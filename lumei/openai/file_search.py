@@ -7,19 +7,14 @@ from openai.types.beta import Thread
 from openai.types.beta.threads import Run
 
 from lumei.openai.agent import Agent
-
-
-class FileSearchQueryParam:
-    def __init__(self, name: str, description: str):
-        self.name = name
-        self.description = description
+from lumei.query_param import FileSearchQueryParam
 
 
 def file_search(
         agent: Agent,
         input_file_path: str,
         file_search_query_params: list[FileSearchQueryParam]
-) -> [Optional[dict[str, str]], Optional[str]]:
+) -> [Optional[dict[str, any]], Optional[str]]:
     vector_store_id: Optional[str] = None
     thread: Optional[Thread] = None
     run: Optional[Run] = None
@@ -88,7 +83,7 @@ def file_search(
         return None, f"Failed to extract data from response: {formatted_result}"
 
 
-def format_result(result_text: str) -> Optional[dict[str, str]]:
+def format_result(result_text: str) -> Optional[dict[str, any]]:
     match = re.search(r'\{.*}', result_text, re.DOTALL)
     if match:
         result_json = match.group()

@@ -11,15 +11,33 @@ class QueryParamAttribute(str, Enum):
     END_DATETIME = "END_DATETIME"
 
 
+class FileSearchQueryParam:
+    def __init__(self, name: str, description: str):
+        self.name = name
+        self.description = description
+
+
+class CommandQueryParam:
+    def __init__(
+            self,
+            name: str,
+            command: str
+    ):
+        self.name = name
+        self.command = command
+
+
 class QueryParam:
     def __init__(
             self, name: str,
             search: Optional[str],
             attribute: Optional[QueryParamAttribute],
+            command: Optional[str],
     ):
         self.name = name
         self.search = search
         self.attribute = attribute
+        self.command = command
 
 
 def parse_query_string(query_string: str) -> [Optional[list[QueryParam]], Optional[str]]:
@@ -39,6 +57,7 @@ def parse_query_string(query_string: str) -> [Optional[list[QueryParam]], Option
         name = query_object.get("name")
         search = query_object.get("search")
         attribute = query_object.get("attribute")
+        command = query_object.get("command")
 
         if not name:
             return None, f"Query parameter name is required: {query_string}"
@@ -48,28 +67,35 @@ def parse_query_string(query_string: str) -> [Optional[list[QueryParam]], Option
 
         seen_param_names.append(name)
 
-        if search and attribute:
-            return None, f"Query parameter should only have either `search` or `attribute`: {query_object}"
-        elif search:
+        if search and not attribute and not command:
             query.append(
                 QueryParam(
                     name=name,
                     search=search,
                     attribute=None,
+                    command=None,
                 )
             )
-        elif attribute:
-            if attribute not in QueryParamAttribute:
-                return None, f"Query parameter attribute not supported: {attribute}"
-
+        elif not search and attribute and not command:
             query.append(
                 QueryParam(
                     name=name,
                     search=None,
                     attribute=QueryParamAttribute(attribute),
+                    command=None,
+                )
+            )
+        elif not search and not attribute and command:
+            query.append(
+                QueryParam(
+                    name=name,
+                    search=None,
+                    attribute=None,
+                    command=command,
                 )
             )
         else:
-            return None, f"Query parameter `search instruction` or `attribute` required: {query_string}"
+            return None, (f"Error, query parameter should only have one of `search`, `attribute`, or `command`: "
+                          f"{query_object}")
 
     return query, None

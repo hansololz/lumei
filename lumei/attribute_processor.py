@@ -8,8 +8,10 @@ def get_attribute_results(
         input_file_path: str,
         start_time: datetime,
         end_time: datetime,
-) -> dict[str, str|int]:
+) -> dict[str, any]:
     result: dict[str, any] = {}
+    print("HERE 2")
+    print(attribute_query)
 
     for key, attribute in attribute_query.items():
         if attribute is QueryParamAttribute.FILE_PATH:

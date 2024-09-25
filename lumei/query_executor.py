@@ -3,11 +3,12 @@ from datetime import datetime
 from typing import Optional
 
 from lumei.attribute_processor import get_attribute_results
+from lumei.command_processor import process_commands
 from lumei.file_manager import save_result, DataDescription, find_matched_files, setup_output_file, \
     check_if_can_create_file, create_data_description
 from lumei.openai.agent import create_agent
 from lumei.openai.file_search import file_search, FileSearchQueryParam
-from lumei.query_param import parse_query_string, QueryParamAttribute
+from lumei.query_param import parse_query_string, QueryParamAttribute, CommandQueryParam
 
 
 def execute_query_and_store_results(
@@ -32,6 +33,7 @@ def execute_query_and_store_results(
 
     file_search_query = []
     attribute_query: dict[str, QueryParamAttribute] = {}
+    command_query: list[CommandQueryParam] = []
     query_param_names: list[str] = []
     for query_param in query:
         query_param_names.append(query_param.name)
@@ -42,8 +44,13 @@ def execute_query_and_store_results(
                     description=query_param.search,
                 )
             )
-        if query_param.name and query_param.attribute:
+        elif query_param.name and query_param.attribute:
             attribute_query[query_param.name] = query_param.attribute
+        elif query_param.name and query_param.command:
+            command_query.append(CommandQueryParam(
+                name=query_param.name,
+                command=query_param.command,
+            ))
 
     print("Parsed list of names and data descriptions for file search.")
 
@@ -69,17 +76,31 @@ def execute_query_and_store_results(
 
     for file in files:
         start_time = datetime.now()
-        file_search_result, error = file_search(agent, file, file_search_query)
+        result: dict[str, any] = {}
+        file_search_results, error = file_search(agent, file, file_search_query)
         end_time = datetime.now()
 
-        if file_search_result:
-            result = get_attribute_results(
+        if file_search_results:
+            result.update(file_search_results)
+
+            attribute_results = get_attribute_results(
                 attribute_query=attribute_query,
                 input_file_path=file,
                 start_time=start_time,
                 end_time=end_time,
             )
-            result.update(file_search_result)
+
+            print(attribute_results)
+
+            result.update(attribute_results)
+
+            command_results = process_commands(
+                input_file_path=file,
+                commands=command_query
+            )
+
+            result.update(command_results)
+
             results.append(result)
             print(f"    {file} SUCCESS")
         elif error:
