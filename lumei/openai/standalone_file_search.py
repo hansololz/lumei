@@ -1,5 +1,3 @@
-from typing import Optional
-
 from lumei import create_agent, FileSearchQueryParam, file_search
 
 
@@ -9,16 +7,15 @@ class FileSearchException(Exception):
 
 def openai_file_search(
         openai_api_key: str,
-        input_file_path: str,
+        input_files: list[str],
         file_search_query: dict[str, str]
-) -> Optional[dict[str, str]]:
+) -> list[dict[str, str] | FileSearchException]:
     agent, error = create_agent(
         openai_api_key=openai_api_key
     )
 
     if error:
-        print(error)
-        return None
+        raise FileSearchException(f"File search query failed with error: {error}")
 
     params = []
 
@@ -30,13 +27,18 @@ def openai_file_search(
             )
         )
 
-    result, error = file_search(
-        agent=agent,
-        input_file_path=input_file_path,
-        file_search_query_params=params
-    )
+    results: list[dict[str, str] | FileSearchException] = []
 
-    if error:
-        raise FileSearchException(f"File search query failed with error: {error}")
+    for input_file in input_files:
+        result, error = file_search(
+            agent=agent,
+            input_file_path=input_file,
+            file_search_query_params=params
+        )
 
-    return result
+        if error:
+            results.append(FileSearchException(f"File search query failed with error: {error}"))
+        else:
+            results.append(result)
+
+    return results
