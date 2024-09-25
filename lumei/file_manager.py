@@ -5,34 +5,11 @@ from typing import Optional
 
 import pandas as pd
 
-file_search_query_example = """
-[
-    { "name": "Student Name", "search": "Name of the student." },
-    { "name": "School", "search": "Student's school" },
-    { "name": "Major", "search": "Student's major." }
-]
-"""
-
 
 class DataDescription:
     def __init__(self, name: str, description: str):
         self.name = name
         self.description = description
-
-
-def create_data_description(query: dict[str, str]) -> [Optional[DataDescription], Optional[str]]:
-    name = query['name']
-    description = query['description']
-
-    if not name:
-        return None, (f"Missing `name` field for file search query. "
-                      f"Example of correct query: {file_search_query_example}")
-
-    if not description:
-        return None, (f"Missing `search` field for file search query. "
-                      f"Example of correct query: {file_search_query_example}")
-
-    return DataDescription(name, description), None
 
 
 def check_if_can_create_file(output_file) -> Optional[str]:

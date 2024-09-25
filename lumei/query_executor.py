@@ -1,11 +1,9 @@
-import ast
 from datetime import datetime
-from typing import Optional
 
 from lumei.attribute_processor import get_attribute_results
 from lumei.command_processor import process_commands
-from lumei.file_manager import save_result, DataDescription, find_matched_files, setup_output_file, \
-    check_if_can_create_file, create_data_description
+from lumei.file_manager import save_result, find_matched_files, setup_output_file, \
+    check_if_can_create_file
 from lumei.openai.agent import create_agent
 from lumei.openai.file_search import file_search, FileSearchQueryParam
 from lumei.query_param import parse_query_string, QueryParamAttribute, CommandQueryParam
@@ -125,19 +123,3 @@ def execute_query_and_store_results(
     print(f"Wrote result to file: {output_file}.")
 
     return 0
-
-
-def convert_file_search_query_to_objects(file_search_query: str) -> [Optional[list[DataDescription]], Optional[str]]:
-    try:
-        queries = ast.literal_eval(file_search_query)
-        descriptions: [list[DataDescription]] = []
-
-        for query in queries:
-            description, error = create_data_description(query)
-            if error:
-                return None, f"Failed to parse file search query: {query}"
-            descriptions += [description]
-
-        return descriptions, None
-    except Exception as e:
-        return None, f"Could not parse file search query json input: {e}"
