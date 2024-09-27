@@ -6,7 +6,7 @@ from lumei.query_param import CommandQueryParam
 def process_commands(
         input_file_path: str,
         commands: list[CommandQueryParam],
-) -> dict[str, str | int]:
+) -> dict[str, any]:
     results: dict[str, any] = {}
 
     for command in commands:
