@@ -15,7 +15,7 @@ def openai_file_search(
         model: Optional[str] = default_model,
         assistant_id: Optional[str] = None,
 ) -> list[dict[str, str] | FileSearchException]:
-    agent, error = creatasse_agent(
+    agent, error = create_agent(
         openai_api_key=openai_api_key,
         model=model,
         assistant_id=assistant_id,
