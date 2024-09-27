@@ -34,8 +34,8 @@ def execute_query_and_store_results(
     command_query: list[CommandQueryParam] = []
     query_param_names: list[str] = []
     for query_param in query:
-        query_param_names.append(query_param.name)
         if query_param.name and query_param.search:
+            query_param_names.append(query_param.name)
             file_search_query.append(
                 FileSearchQueryParam(
                     name=query_param.name,
@@ -43,10 +43,14 @@ def execute_query_and_store_results(
                 )
             )
         elif query_param.name and query_param.attribute:
+            query_param_names.append(query_param.name)
             attribute_query[query_param.name] = query_param.attribute
-        elif query_param.name and query_param.command:
+        elif query_param.names and query_param.command:
+            for name in query_param.names:
+                query_param_names.append(name)
+
             command_query.append(CommandQueryParam(
-                name=query_param.name,
+                names=query_param.names,
                 command=query_param.command,
             ))
 
