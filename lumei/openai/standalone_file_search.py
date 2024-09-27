@@ -1,4 +1,7 @@
+from typing import Optional
+
 from lumei import create_agent, FileSearchQueryParam, file_search
+from lumei.openai.agent import default_model
 
 
 class FileSearchException(Exception):
@@ -8,10 +11,14 @@ class FileSearchException(Exception):
 def openai_file_search(
         openai_api_key: str,
         input_files: list[str],
-        file_search_query: dict[str, str]
+        file_search_query: dict[str, str],
+        model: Optional[str] = default_model,
+        assistant_id: Optional[str] = None,
 ) -> list[dict[str, str] | FileSearchException]:
-    agent, error = create_agent(
-        openai_api_key=openai_api_key
+    agent, error = creatasse_agent(
+        openai_api_key=openai_api_key,
+        model=model,
+        assistant_id=assistant_id,
     )
 
     if error:
