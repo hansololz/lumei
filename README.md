@@ -25,7 +25,10 @@ lumei \
   	{'name': 'vendor', 'search': 'Name of the vendor who issued the invoice.'}, 
   	{'name': 'price', 'search': 'Total bill from the invoice.'},
   	{'name': 'file path', 'attribute': 'FILE_PATH'},
-  	{'name': 'file created time', 'command': 'stat -f %SB %input_file_path%'}
+  	{
+  	  'names': {'variable 1': 'var1', 'variable 2': 'var2' }, 
+  	  'command': 'stat -f %SB %input_file_path% && var1=1 && var2=2'
+  	}
   ]"
 ```
 
@@ -59,7 +62,9 @@ Input should be an array of JSON objects.
 `search` is the description of the data to search for. 
 `attribute` is a piece metadata related to the query, list of possible attributes can be found below.
 `command` is the output of a bash command. 
-The command can reference the file path using the `%input_file_path%` variable.
+The command can reference the file path using the `%input_file_path%` variable. 
+`names` is map of column names to environment variables names.
+This is only supported for commands.
 
 Example:
 ```
@@ -77,8 +82,8 @@ Example:
         'attribute': 'FILE_PATH'
     },
     {
-        'name': 'file created time', 
-        'command': 'stat -f %SB %input_file_path%'
+        'names': {'variable 1': 'var1', 'variable 2': 'var2' }, 
+        'command': 'stat -f %SB %input_file_path% && var1=1 && var2=2'
     }
 ]
 ```
