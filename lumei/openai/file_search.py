@@ -68,6 +68,10 @@ def file_search(
 
     try:
         messages = list(agent.client.beta.threads.messages.list(thread_id=thread.id, run_id=run.id))
+
+        if not messages or not messages[0].content:
+            return None, "Could not get message from OpenAI."
+
         message_content = messages[0].content[0].text.value
     except Exception as e:
         clean_up_request(agent, file, vector_store_id)
