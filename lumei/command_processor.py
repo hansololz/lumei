@@ -27,8 +27,6 @@ def process_commands(
         prepared_command = f"{replaced_command} && {print_all_variable_command}"
         command_output = subprocess.run(prepared_command, shell=True, capture_output=True, text=True)
 
-        print(f"HERE 8 {command_output.stdout}")
-
         output_start_split = command_output.stdout.split("LUMEI_VARIABLE_START ")
 
         if len(output_start_split) == 2:
