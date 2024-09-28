@@ -71,8 +71,6 @@ def parse_query_string(query_string: str) -> [Optional[list[QueryParam]], Option
         else:
             seen_param_names.append(name)
 
-        # print(f"HERE {name} AND {names}")
-
         if names:
             for environment_name in names.items():
                 if environment_name in seen_param_names:
@@ -101,8 +99,6 @@ def parse_query_string(query_string: str) -> [Optional[list[QueryParam]], Option
                 )
             )
         elif names and not search and not attribute and command:
-            print("HERE 5")
-
             query.append(
                 QueryParam(
                     name=None,
